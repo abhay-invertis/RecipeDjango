@@ -86,9 +86,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR  ,  "public/static")  # Corrected to STATICFILES_DIRS
-]STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles')  # Directory for collected static files
+STATIC_DIRS = [
+    os.path.join(BASE_DIR  ,  "vege/static")  # Corrected to STATICFILES_DIRS
+]
+STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles')  # Directory for collected static files
 
 # Media files
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')  # Corrected to a separate media folder
