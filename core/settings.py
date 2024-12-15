@@ -1,48 +1,38 @@
-from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-SECRET_KEY = 'django-insecure-quy=4u0*zrja_r@lb!77f(aezmbvqhj0o@tqokyps9m11*hpnr'
 DEBUG = True
-ALLOWED_HOSTS = []
 
-# Application definition
+ALLOWED_HOSTS = ['your-app-name.vercel.app']
+
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',  # Fixed missing comma
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'vege',  # Your app name
 ]
 
-EXTERNAL_APPS = [
-    'vege'
-]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'vege/static')]  # Path to your static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Ensure static files are collected
 
-INSTALLED_APPS += EXTERNAL_APPS
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Path for media files
 
-# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',  # Fixed typo
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URL configuration
-ROOT_URLCONF = 'core.urls'
-
-# Templates configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -61,39 +51,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your-db-name',
+        'USER': 'your-db-user',
+        'PASSWORD': 'your-db-password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
-# Localization settings
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "vege/static")]
-
-STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles')  # Directory for collected static files
-
-# Media files
-MEDIA_ROOT = os.path.join(BASE_DIR , 'media')  # Corrected to a separate media folder
-MEDIA_URL = '/media/'
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Security settings for production (if not using DEBUG mode)
+SECRET_KEY = 'your-secret-key'
